@@ -398,7 +398,8 @@ roundt reg1, reg2                & Записать в целочисленны�
 frac reg1, reg2                  & Записать в вещественный регистр reg1 дробную часть содержимого вещественного регистра reg2.    \\ \hline
 absf reg1, reg2                  & Записать в вещественный регистр reg1 результат вычисления модуля числа, находящегося в вещественном регистре reg2. \\ \hline
 mul2f reg1, reg2, reg3           & $\texttt{reg1}\leftarrow \texttt{reg2}\cdot2^{\texttt{reg3}}$. Здесь reg1 и reg2 --- вещественные регистры, а reg3 --- целочисленный регистр. \\ \hline 
-mul2f reg1, reg2, imm15           & $\texttt{reg1}\leftarrow \texttt{reg2}\cdot2^{\texttt{reg3}}$. Здесь reg1 и reg2 --- вещественные регистры, а imm15 --- знаковая целочисленная 15--разрядная константа. \\ \hline 
+mul2f reg1, reg2, imm10          & $\texttt{reg1}\leftarrow \texttt{reg2}\cdot2^{\texttt{imm10}}$. Здесь reg1 и reg2 --- вещественные регистры, а imm10 --- знаковая целочисленная 10--разрядная константа. \\ \hline 
+chsf reg1, reg2                  & $\texttt{reg1}\leftarrow-\texttt{reg2}$\\ \hline
 \end{longtable}    
 
     \section{Команды передачи управления}
@@ -868,7 +869,14 @@ roundl reg1, reg2               & 01:0000000110:reg1:reg2:0000000000 (т.е. и�
 roundg reg1, reg2               & 01:0000000111:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=01$, $\texttt{OP}=0000000111$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
 roundt reg1, reg2               & 01:0000001000:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=01$, $\texttt{OP}=0000001000$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
 frac reg1, reg2                 & 01:0000001001:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=01$, $\texttt{OP}=0000001001$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+absf reg1, reg2                 & 01:0000001010:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=01$, $\texttt{OP}=0000001010$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+mul2f reg1, reg2, reg3          & 01:0000001011:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=01$, $\texttt{OP}=0000001011$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$, $\texttt{R3}=\texttt{reg3}$) \\ \hline
+mul2f reg1, reg2, imm10         & 01:0000001011:reg1:reg2:imm10:00000 (т.е. используется шаблон E с $\texttt{T}=01$, $\texttt{OP}=0000001100$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$, $\texttt{IMM}=\texttt{imm10}$) \\ \hline
+chsf reg1, reg2                 & 01:0000000101:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=01$, $\texttt{OP}=0000001101$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
 \end{longtable} 
+
+
+
 
 
 \section{Команды передачи управления}
