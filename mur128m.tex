@@ -549,10 +549,10 @@ le                     & Содержимое проверяемого реги�
 \section{Формат команд}
 Все команды используют один из общих шаблонов форматов, показанных ниже (самые старшие разряды --- слева).
 
-%\bytefieldsetup{bitwidth=4.6mm}
-%\bytefieldsetup{bitheight=5mm} 
-\setlength{\bitwidth}{4.6mm}
-\setlength{\byteheight}{5mm}
+\bytefieldsetup{bitwidth=4.6mm}
+\bytefieldsetup{bitheight=5mm} 
+%\setlength{\bitwidth}{4.6mm}
+%\setlength{\byteheight}{5mm}
 \begin{figure}[!h]
 \centering
 {\begin{bytefield}{32}
@@ -849,6 +849,8 @@ mov64f [mem64], reg  & 11:0000011001:reg:B:IX:SF:00 (т.е. использует
 mov80f [mem64], reg  & 11:0000011010:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000011010$, $\texttt{R}=\texttt{reg}$)\\ \hline
 push f$i$-f$j$       & 11:0000011011:f$i$:f$j$:0000000000 (т.е. используется шаблон D с $\texttt{T}=11$, $\texttt{OP}=0000011011$, $\texttt{R1}=\texttt{f}i$, $\texttt{R2}=\texttt{f}j$) \\ \hline
 pop f$i$-f$j$        & 11:0000011100:r$i$:r$j$:0000000000 (т.е. используется шаблон D с $\texttt{T}=11$, $\texttt{OP}=0000011100$, $\texttt{R1}=\texttt{f}i$, $\texttt{R2}=\texttt{f}j$) \\ \hline
+fld1 reg             & 11:0000011101:reg:000000000000000 (т.е. используется шаблон B с $\texttt{T}=11$, $\texttt{OP}=0000011101$, $\texttt{R}=\texttt{reg}$) \\ \hline
+fldz reg             & 11:0000011110:reg:000000000000000 (т.е. используется шаблон B с $\texttt{T}=11$, $\texttt{OP}=0000011110$, $\texttt{R}=\texttt{reg}$) \\ \hline
 \end{longtable}
         
     \subsection{Арифметические команды}
