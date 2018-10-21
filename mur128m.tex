@@ -1,0 +1,947 @@
+\documentclass[10pt]{report}
+
+% \usepackage[utf8]{inputenc}
+\usepackage[utf8x]{inputenc}
+\usepackage{hyperref}
+%\usepackage{graphicx}
+%\usepackage{float}
+\usepackage[russian]{babel}
+%\usepackage{listings}
+%\lstset{inputencoding=utf8,extendedchars=false,keepspaces=true} %,language=C++
+
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{ccaption}
+\usepackage{verbatim}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{subfiles}
+\usepackage{syntax}
+\usepackage{bytefield}
+
+
+
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+
+\usepackage[dvipsnames,usenames]{color}
+\usepackage{hyperref}
+\hypersetup{unicode,breaklinks=true}
+%\usepackage{tikz}
+%\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri,calc,shapes.misc,shapes.geometric}
+%\usepackage{minted}
+
+\textheight 24.0cm
+\textwidth 16.8cm
+
+\voffset -2cm
+\hoffset .0cm
+\oddsidemargin 0.5mm
+\evensidemargin 0.5mm
+\topmargin -0.4mm
+\righthyphenmin=2
+\hfuzz=12.7pt
+\makeatletter
+%\renewcommand\section{\@startsection {section}{1}{\z@}%
+%                                   {3.5ex \@plus 1ex \@minus .2ex}%
+%                                   {2.3ex \@plus.2ex}%
+%                                   {\normalfont\Large\bfseries}}
+%\renewcommand{\thesection}{\arabic{section}}
+\@addtoreset{equation}{section}
+\@addtoreset{figure}{section}
+\@addtoreset{table}{section}
+
+\newlength{\chaprule}
+\newlength{\ATchapskip}
+\setlength{\chaprule}{0.4\p@} \setlength{\ATchapskip}{10\p@} \advance \ATchapskip by -1\chaprule
+\renewcommand{\@makechapterhead}[1]{%
+	\ifdim\chaprule>6\p@ \setlength{\chaprule}{6\p@}\fi
+	\vspace*{\ATchapskip}%
+	%\noindent\rule{\textwidth}{\chaprule}\par%
+	%\vskip 10\p@
+	{\parindent \z@ \normalfont \ifnum \c@secnumdepth >\m@ne {\huge\bfseries \@chapapp\space \thechapter.}
+		%\par\nobreak
+		%\vskip 8\p@
+		\fi \interlinepenalty\@M \huge\bfseries #1\par\nobreak \vskip 10\p@
+		%\noindent\rule{\textwidth}{\chaprule}\par%
+		\vskip\ATchapskip }}
+
+%\@addtoreset{lstlisting}{section}
+\makeatother
+
+
+\newcounter{rem}[section]
+\renewcommand{\therem}{\thesection.\arabic{rem}}
+\newenvironment{Remark}{\par\refstepcounter{rem} \bf Замечание \therem. \sl}{\rm\par}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+\renewcommand{\thetable}{\thesection.\arabic{table}}
+
+\renewcommand{\theenumi}{\arabic{enumi}}
+\renewcommand{\labelenumi}{\theenumi)}
+\newcommand{\udc}[1]{УДК #1}
+
+\newcounter{lem}[section]
+\renewcommand{\thelem}{\thesection.\arabic{lem}}
+\newenvironment{Lemma}{\par\refstepcounter{lem}\bf Лемма \thelem. \sl}{\rm\par}
+
+\newcounter{cor}[section]
+\renewcommand{\thecor}{\thesection.\arabic{cor}}
+\newenvironment{Corrolary}{\par\refstepcounter{cor}\bf Следствие \thecor. \sl}{\rm\par}
+\newcounter{theor}[section]
+\renewcommand{\thetheor}{\thesection.\arabic{theor}}
+\newenvironment{Theorem}{\par\refstepcounter{theor}\bf Теорема \thetheor. \sl}{\rm\par}
+%\let \kappa=\ae
+\newcommand{\diag}{\mathop{\rm diag}}
+\newcommand{\epi}{\mathop{\rm epi}}
+\newenvironment{Proof}{\par\noindent\bf Доказательство.\rm}{ \par}
+
+\newcounter{exam}[section]
+\renewcommand{\theexam}{\thesection.\arabic{exam}}
+\newenvironment{Example}{\par\refstepcounter{exam}\bf Пример \theexam. \sl}{\rm\par}
+
+\newcounter{prob}[section]
+\renewcommand{\theprob}{\thesection.\arabic{prob}}
+\newenvironment{Problem}{\par\refstepcounter{prob}\bf Задача \theprob. \sl}{\rm\par}
+
+\newcounter{sol}[section]
+\renewcommand{\thesol}{\thesection.\arabic{sol}}
+\newenvironment{Solution}{\par\refstepcounter{sol}\bf Решение. \rm}{\rm\par}
+
+\newcounter{defin}[section]
+\renewcommand{\thedefin}{\thesection.\arabic{defin}}
+\newenvironment{Definition}{\par\refstepcounter{defin}\bf Определение \thedefin.\sl}{\rm\par}
+
+\newcounter{answ}[section]
+\renewcommand{\theansw}{\thesection.\arabic{answ}}
+\newenvironment{Answer}{\par\refstepcounter{answ}\theansw. \rm}{\rm\par}
+
+\newcounter{exerc}[section]
+\renewcommand{\theexerc}{\thesection.\arabic{exerc}}
+\newenvironment{Exercise}{\par\refstepcounter{exerc}\bf Упражнение \theexerc.\sl}{\rm\par}
+
+\newcounter{algor}[section]
+\renewcommand{\thealgor}{\thesection.\arabic{algor}}
+\newenvironment{Algorithm}[3]{\par\refstepcounter{algor}{\bf Алгоритм \thealgor. }{\sl #1}\par{\bf Вход: }{\sl #2}\par{\bf Выход: }\sl #3\par{\bf Метод.}\par}{\rm\par}
+
+\newcommand{\ljoq}{<<}
+\newcommand{\rjoq}{>>}
+\captiondelim{. }
+
+
+
+%\setcounter{section}{1}
+
+
+\makeatletter
+\def\@seccntformat#1{\csname the#1\endcsname.\quad}
+\makeatother
+
+\algrenewcommand\algorithmicwhile{\textbf{пока}}
+\algrenewcommand\algorithmicdo{\textbf{ }}
+\algrenewcommand\algorithmicend{\textbf{конец}}
+\algrenewcommand\algorithmicif{\textbf{если}}
+\algrenewcommand\algorithmicthen{\textbf{то}}
+\algrenewtext{EndIf}{\textbf{всё}}
+\algrenewcommand\algorithmicfor{\textbf{для}}
+\algrenewtext{ForAll}{\textbf{для всех }}
+\algrenewcommand\algorithmicelse{\textbf{иначе}}
+\algrenewtext{ElsIf}{\textbf{инес }}
+\algrenewtext{Procedure}{\textbf{алг }}
+\algrenewtext{EndProcedure}{\textbf{кон }}
+
+% modify style
+\renewcommand{\familydefault}{\sfdefault}
+% \setlength{\parindent}{1cm} % doesn't work.
+
+\begin{document}
+\title{Процессор МУР128\\ (машина учебная регистровая, 128--разрядная)}
+\author{Гаврилов В.С.}
+\date{\today}
+\maketitle
+%\raggedright
+%\RaggedRight
+
+\tableofcontents
+\setcounter{secnumdepth}{2}
+
+\listoftables
+
+\chapter{Основы архитектуры}
+    \section{Регистры}
+Процессор МУР128 имеет следующие регистры: 32 целочисленных регистра общего назначения (r0--r31) по 128 разрядов в каждом; 32 вещественных регистра (f0--f31), тоже по 128 разрядов в каждом; и 128--разрядный указатель команд ip. Регистры общего назначения можно использовать для целых чисел и для указателей. Вещественные регистры предназначены для хранения вещественных чисел. Формат хранения данных в вещественных регистрах --- формат четырёхкратной точности. Имеется также указатель стека sp и указатель кадра стека, bp. Первый из них идентичен r31, а второй идентичен r30. Специального регистра флагов нет.
+
+    \section{Режимы адресации}
+Находящийся в памяти операнд можно адресовать с помощью следующей формы:
+\vspace{5mm}
+
+\parbox{50mm}{%
+Address = BP + IX*SF
+}
+\vspace{5mm}
+
+Здесь BP --- 128--разрядный базовый указатель, IX --- 128--разрядный индексный регистр, SF --- масштабирующий множитель.
+
+Базовый указатель, BP, может быть регистром общего назначения, в том числе указателем стека (sp) и указателем кадра стека (bp).
+
+Индексный регистр, IX, может быть одним из регистров r0--r30.
+
+Масштабирующий множитель, SF, может принимать значения 1, 2, 4, 8, 10, 16.
+
+Переходы и вызовы могут использовать как смещение относительно указателя команд, так и абсолютный адрес. В каждом из этих случаев адрес перехода может указываться как в регистре общего назначения, так и непосредственно заданной 15--разрядной константой, расширяемой знаком до 128 разрядов. При использовании в качестве адреса перехода смещения относительно указателя команд, адрес перехода вычисляется так:
+\vspace{5mm}
+
+\parbox{50mm}{%
+Address = IP + 4 * Offset}
+\vspace{5mm}
+
+\noindent%
+поскольку размер любой команды процессора МУР128 равен 4 байтам.
+    
+\chapter{Список команд}
+    \section{Целочисленные команды}
+Целочисленные команды можно разделить на три больших группы: команды пересылки, арифметические команды, и поразрядные операции. В следующих трёх разделах перечисляются все эти команды и описывается их поведение.    
+        \subsection{Команды пересылки}
+К целочисленным командам пересылки относятся следующие команды:
+
+%\begin{table}[!h]
+%\caption{Целочисленные команды пересылки}
+%
+\begin{longtable}[c]{|l|p{12.5cm}|}
+\caption{Целочисленные команды пересылки} \\ \hline
+{\textbf{Команда}}    & \textbf{Пояснение} \endhead \hline 
+mov reg1, reg2        & Записать в целочисленный регистр reg1 содержимое целочисленного регистра reg2. \\ \hline 
+movu reg, imm15       & Записать в целочисленный регистр reg непосредственно заданную константу imm15, расширив её нулём до 128 разрядов. \\ \hline 
+movs reg, imm15       & Записать в целочисленный регистр reg непосредственно заданную константу imm15, расширив её знаком до 128 разрядов. \\ \hline 
+mov reg, [mem128]     & Загрузить в целочисленный регистр reg содержимое 128--разрядной ячейки памяти mem128. \\ \hline 
+mov8u reg, [mem8]     & Загрузить в целочисленный регистр reg содержимое 8--разрядной ячейки памяти mem8, расширив его перед этим нулём до 128 разрядов. \\ \hline 
+mov16u reg, [mem16]   & Загрузить в целочисленный регистр reg содержимое 16--разрядной ячейки памяти mem16, расширив его перед этим нулём до 128 разрядов. \\ \hline 
+mov32u reg, [mem32]   & Загрузить в целочисленный регистр reg содержимое 32--разрядной ячейки памяти mem32, расширив его перед этим нулём до 128 разрядов. \\ \hline 
+mov64u reg, [mem64]   & Загрузить в целочисленный регистр reg содержимое 64--разрядной ячейки памяти mem64, расширив его перед этим нулём до 128 разрядов. \\ \hline 
+mov8s reg, [mem8]     & Загрузить в целочисленный регистр reg содержимое 8--разрядной ячейки памяти mem8, расширив его перед этим знаком до 128 разрядов. \\ \hline 
+mov16s reg, [mem16]   & Загрузить в целочисленный регистр reg содержимое 16--разрядной ячейки памяти mem16, расширив его перед этим знаком до 128 разрядов. \\ \hline 
+mov32s reg, [mem32]   & Загрузить в целочисленный регистр reg содержимое 32--разрядной ячейки памяти mem32, расширив его перед этим знаком до 128 разрядов. \\ \hline 
+mov64s reg, [mem64]   & Загрузить в целочисленный регистр reg содержимое 64--разрядной ячейки памяти mem64, расширив его перед этим знаком до 128 разрядов. \\ \hline 
+mov [mem128], reg     & Сохранить содержимое целочисленного регистра reg в 128--разрядной ячейке памяти mem128.\\ \hline
+mov8 [mem8], reg      & Сохранить младшие 8 разрядов целочисленного регистра reg в 8--разрядной ячейке памяти mem8.\\ \hline
+mov16 [mem16], reg    & Сохранить младшие 16 разрядов целочисленного регистра reg в 16--разрядной ячейке памяти mem16.\\ \hline
+mov32 [mem32], reg    & Сохранить младшие 32 разряда целочисленного регистра reg в 32--разрядной ячейке памяти mem32.\\ \hline
+mov64 [mem64], reg    & Сохранить младшие 64 разряда целочисленного регистра reg в 64--разрядной ячейке памяти mem64.\\ \hline
+push r$i$-r$j$        & {\parbox{12.3cm}{Сохранить в стеке содержимое регистров с  r$i$ по r$j$ (должно быть $i\leqslant j$). А именно, делается следующее:\\
+\texttt{for(n = i; n <= j; n++)\{\\
+\phantom{aaaa}sp -= 16;\\
+\phantom{aaaa}*sp $\leftarrow$ r$n$;\\
+\} }
+}}  \\ \hline
+pop r$i$-r$j$        & {\parbox{12.3cm}{Восстановить из стека содержимое регистров с  r$i$ по r$j$ (должно быть $i\leqslant j$). А именно, делается следующее:\\
+\texttt{for(n = i; n <= j; n++)\{\\
+\phantom{aaaa}r$n$ $\leftarrow$ *sp;\\
+\phantom{aaaa}sp += 16;\\
+\} }
+}}  \\ \hline
+\end{longtable}    
+%\end{table}
+
+     
+        \subsection{Арифметические команды}
+К арифметическим командам относятся команды целочисленных сложения, вычитания, умножения, деления, и вычисления остатка, а также команды сравнения.
+
+В следующей таблице перечислены все целочисленные арифметические команды.        
+\begin{longtable}{|l|p{11.35cm}|}
+\caption{Целочисленные арифметические команды} \\ \hline 
+{\textbf{Команда}}               & \textbf{Пояснение}           \endhead \hline 
+addi reg1, reg2, reg3            & $\texttt{reg1}\leftarrow \texttt{reg2}+\texttt{reg3}$   \\ \hline
+addi reg1, reg2, imm10           & $\texttt{reg1}\leftarrow \texttt{reg2}+\texttt{imm10}$ \\ \hline
+subi reg1, reg2, reg3            & $\texttt{reg1}\leftarrow \texttt{reg2}-\texttt{reg3}$   \\ \hline
+subi reg1, reg2, imm10           & $\texttt{reg1}\leftarrow \texttt{reg2}-\texttt{imm10}$ \\ \hline
+muliu reg1, reg2, reg3           & Записать в reg1 младшие 128 разрядов результата беззнакового произведения reg2 и reg3.   \\ \hline
+muliu reg1, reg2, imm10          & Записать в reg1 младшие 128 разрядов результата беззнакового произведения reg2 и imm10.   \\ \hline
+mulis reg1, reg2, reg3           & Записать в reg1 младшие 128 разрядов результата знакового произведения reg2 и reg3.   \\ \hline
+mulis reg1, reg2, imm10          & Записать в reg1 младшие 128 разрядов результата знакового произведения reg2 и imm10.   \\ \hline
+diviu reg1, reg2, reg3           & Записать в reg1 частное при беззнаковом делении reg2 на reg3.   \\ \hline
+diviu reg1, reg2, imm10          & Записать в reg1 частное при беззнаковом делении reg2 на imm10.   \\ \hline
+divis reg1, reg2, reg3           & Записать в reg1 частное при знаковом делении reg2 на reg3.   \\ \hline
+divis reg1, reg2, imm10          & Записать в reg1 частное при беззнаковом делении reg2 на imm10.   \\ \hline
+modiu reg1, reg2, reg3           & Записать в reg1 остаток от беззнакового деления reg2 на reg3.   \\ \hline
+modiu reg1, reg2, imm10          & Записать в reg1 остаток от беззнакового деления reg2 на imm10.   \\ \hline
+modis reg1, reg2, reg3           & Записать в reg1 остаток от знакового деления reg2 на reg3.   \\ \hline
+modis reg1, reg2, imm10          & Записать в reg1 остаток от знакового деления reg2 на imm10.   \\ \hline
+divmodiu reg1, reg2, reg3, reg4  & Записать в reg1 частное при беззнаковом делении reg3 на reg4, а в reg2 --- остаток от деления.   \\ \hline
+divmodis reg1, reg2, reg3, reg4  & Записать в reg1 частное при знаковом делении reg3 на reg4, а в reg2 --- остаток от деления.   \\ \hline
+cmpiu reg1, reg2, reg3           & {\parbox{11cm}{Беззнаково сравнить reg2 и reg3. Далее так:%
+$$
+\texttt{reg1}\leftarrow\begin{cases}
+-1,\text{ если $\texttt{reg2}<\texttt{reg3}$};\cr
+0,\text{ если $\texttt{reg2}=\texttt{reg3}$};\cr
++1,\text{ если $\texttt{reg2}>\texttt{reg3}$}.\cr
+\end{cases}
+$$}} \\ \hline
+cmpis reg1, reg2, reg3           & {\parbox{11cm}{Знаково сравнить reg2 и reg3. Далее так:%
+$$
+\texttt{reg1}\leftarrow\begin{cases}
+-1,\text{ если $\texttt{reg2}<\texttt{reg3}$};\cr
+0,\text{ если $\texttt{reg2}=\texttt{reg3}$};\cr
++1,\text{ если $\texttt{reg2}>\texttt{reg3}$}.\cr
+\end{cases}
+$$}} \\ \hline
+cmpiu reg1, reg2, imm10           & {\parbox{11cm}{Беззнаково сравнить reg2 и imm10. Далее так:%
+$$
+\texttt{reg1}\leftarrow\begin{cases}
+-1,\text{ если $\texttt{reg2}<\texttt{imm10}$};\cr
+0,\text{ если $\texttt{reg2}=\texttt{imm10}$};\cr
++1,\text{ если $\texttt{reg2}>\texttt{imm10}$}.\cr
+\end{cases}
+$$}} \\ \hline
+cmpis reg1, reg2, imm10           & {\parbox{11cm}{Знаково сравнить reg2 и imm10. Далее так:%
+$$
+\texttt{reg1}\leftarrow\begin{cases}
+-1,\text{ если $\texttt{reg2}<\texttt{imm10}$};\cr
+0,\text{ если $\texttt{reg2}=\texttt{imm10}$};\cr
++1,\text{ если $\texttt{reg2}>\texttt{imm10}$}.\cr
+\end{cases}
+$$}} \\ \hline
+\end{longtable}
+%\end{table}
+
+В данном разделе и в последующих imm10 --- 10--разрядная знаковая константа.
+
+        \subsection{Поразрядные операции}
+В приводимой ниже таблице сведены все команды вычисления поразрядных операций:        
+\begin{table}[!h]
+\caption{Команды поразрядных операций}
+
+\begin{tabular}{|l|p{11.35cm}|}\hline 
+{\textbf{Команда}}               & \textbf{Пояснение}           \\ \hline 
+and reg1, reg2, reg3             & $\texttt{reg1}\leftarrow \texttt{reg2}\mathop{\textrm{\&}}\texttt{reg3}$   \\ \hline
+and reg1, reg2, imm10            & $\texttt{reg1}\leftarrow \texttt{reg2}\mathop{\textrm{\&}}\texttt{imm10}$   \\ \hline
+or reg1, reg2, reg3              & $\texttt{reg1}\leftarrow \texttt{reg2}\mathop{\textrm{|}}\texttt{reg3}$   \\ \hline
+or reg1, reg2, imm10             & $\texttt{reg1}\leftarrow \texttt{reg2}\mathop{\textrm{|}}\texttt{imm10}$   \\ \hline
+xor reg1, reg2, reg3             & $\texttt{reg1}\leftarrow \texttt{reg2}\mathop{\textrm{\textasciicircum}}\texttt{reg3}$   \\ \hline
+xor reg1, reg2, imm10            & $\texttt{reg1}\leftarrow \texttt{reg2}\mathop{\textrm{\textasciicircum}}\texttt{imm10}$   \\ \hline
+andn reg1, reg2, reg3            & $\texttt{reg1}\leftarrow \texttt{reg2}\mathop{\textrm{\&}}\text{\textasciitilde}\texttt{reg3}$   \\ \hline
+andn reg1, reg2, imm10           & $\texttt{reg1}\leftarrow \texttt{reg2}\mathop{\textrm{\&}}\text{\textasciitilde}\texttt{imm10}$   \\ \hline
+orn reg1, reg2, reg3             & $\texttt{reg1}\leftarrow \texttt{reg2}\mathop{\textrm{|}}\text{\textasciitilde}\texttt{reg3}$   \\ \hline
+orn reg1, reg2, imm10            & $\texttt{reg1}\leftarrow \texttt{reg2}\mathop{\textrm{|}}\text{\textasciitilde}\texttt{imm10}$   \\ \hline
+xorn reg1, reg2, reg3            & $\texttt{reg1}\leftarrow \texttt{reg2}\mathop{\textrm{\textasciicircum}}\text{\textasciitilde}\texttt{reg3}$   \\ \hline
+xorn reg1, reg2, imm10           & $\texttt{reg1}\leftarrow \texttt{reg2}\mathop{\textrm{\textasciicircum}}\text{\textasciitilde}\texttt{imm10}$   \\ \hline
+lshift reg1, reg2, reg3          & $\texttt{reg1}\leftarrow \texttt{reg2}\ll\texttt{reg3}$   \\ \hline
+lshift reg1, reg2, imm10         & $\texttt{reg1}\leftarrow \texttt{reg2}\ll\text{\textasciitilde}\texttt{imm10}$   \\ \hline
+rshift reg1, reg2, reg3          & $\texttt{reg1}\leftarrow \texttt{reg2}\gg\texttt{reg3}$ (сдвиг вправо беззнакового числа, при этом слева вдвигаются нули)  \\ \hline
+rshift reg1, reg2, imm10         & $\texttt{reg1}\leftarrow \texttt{reg2}\gg\text{\textasciitilde}\texttt{imm10}$ (сдвиг вправо беззнакового числа, при этом слева вдвигаются нули)   \\ \hline
+rshifts reg1, reg2, reg3         & $\texttt{reg1}\leftarrow \texttt{reg2}\gg\texttt{reg3}$ (сдвиг вправо знакового числа, при этом слева остаётся неизменным знаковый разряд)  \\ \hline
+rshifts reg1, reg2, imm10        & $\texttt{reg1}\leftarrow \texttt{reg2}\gg\texttt{imm10}$ (сдвиг вправо знакового числа, при этом слева остаётся неизменным знаковый разряд)   \\ \hline
+not reg1, reg2                   & $\texttt{reg1}\leftarrow \text{\textasciitilde}\texttt{reg2}$   \\ \hline
+not reg1, imm15                  & $\texttt{reg1}\leftarrow \text{\textasciitilde}\texttt{imm15}$   \\ \hline
+\end{tabular}
+\end{table}
+
+В данном разделе и в последующих imm15 --- 15--разрядная знаковая константа.
+
+    \section{Вещественные команды}
+Вещественные команды можно разделить на две больших группы: команды пересылки и арифметические команды. В следующих двух разделах перечисляются все эти команды и описывается их поведение.            
+        \subsection{Команды пересылки}
+К целочисленным командам пересылки относятся следующие команды:
+%\begin{center}
+\begin{longtable}[c]{|l|p{12.5cm}|}
+\caption{Вещественные команды пересылки} \\ \hline
+{\textbf{Команда}}    & \textbf{Пояснение} \endhead \hline 
+mov reg1, reg2        & Записать в вещественный регистр reg1 содержимое вещественного регистра reg2. \\ \hline 
+mov reg, [mem128]     & Загрузить в вещественный регистр reg содержимое 128--разрядной ячейки памяти mem128. \\ \hline 
+mov32f reg, [mem32]   & Загрузить в вещественный регистр reg содержимое 32--разрядной ячейки памяти mem32. \\ \hline 
+mov64f reg, [mem64]   & Загрузить в вещественный регистр reg содержимое 64--разрядной ячейки памяти mem64. \\ \hline 
+mov80f reg, [mem80]   & Загрузить в вещественный регистр reg содержимое 80--разрядной ячейки памяти mem80. \\ \hline 
+mov32f [mem32], reg   & Сохранить содержимое вещественного регистра reg в 32--разрядной ячейке памяти mem32 (происходит преобразование из четырёхкратной точности к одинарной).\\ \hline
+mov64f [mem64], reg   & Сохранить содержимое вещественного регистра reg в 64--разрядной ячейке памяти mem64 (происходит преобразование из четырёхкратной точности к двойной точности).\\ \hline
+mov80f [mem64], reg   & Сохранить содержимое вещественного регистра reg в 80--разрядной ячейке памяти mem80 (происходит преобразование из четырёхкратной точности к расширенной точности).\\ \hline
+push f$i$-f$j$        & {\parbox{12.3cm}{Сохранить в стеке содержимое регистров с  f$i$ по f$j$ (должно быть $i\leqslant j$). А именно, делается следующее:\\
+\texttt{for(n = i; n <= j; n++)\{\\
+\phantom{aaaa}sp -= 16;\\
+\phantom{aaaa}*sp $\leftarrow$ f$n$;\\
+\} }
+}}  \\ \hline
+pop f$i$-f$j$        & {\parbox{12.3cm}{Восстановить из стека содержимое регистров с  f$i$ по f$j$ (должно быть $i\leqslant j$). А именно, делается следующее:\\
+\texttt{for(n = i; n <= j; n++)\{\\
+\phantom{aaaa}f$n$ $\leftarrow$ *sp;\\
+\phantom{aaaa}sp += 16;\\
+\} }
+}}  \\ \hline
+fld1 reg             & загрузить в вещественный регистр reg вещественную константу 1.0. \\ \hline
+fldz reg             & загрузить в вещественный регистр reg вещественную константу 0.0. \\ \hline
+\end{longtable}    
+%\end{center}%\end{table}
+
+        \subsection{Арифметические команды}
+К вещественным арифметическим командам относятся команды выполнения четырёх действий арифметики, команда сравнения, и команды округления. Все вещественные арифметические команды собраны в приводимой ниже таблице.        
+\begin{longtable}[c]{|l|p{12.5cm}|}
+\caption{Вещественные арифметические команды} \\ \hline
+{\textbf{Команда}}               & \textbf{Пояснение} \endhead \hline 
+addf reg1, reg2, reg3            & $\texttt{reg1}\leftarrow \texttt{reg2}+\texttt{reg3}$   \\ \hline
+subf reg1, reg2, reg3            & $\texttt{reg1}\leftarrow \texttt{reg2}-\texttt{reg3}$   \\ \hline
+mulf reg1, reg2, reg3            & $\texttt{reg1}\leftarrow \texttt{reg2}\mathop{\texttt{*}}\texttt{reg3}$   \\ \hline
+divf reg1, reg2, reg3            & $\texttt{reg1}\leftarrow \texttt{reg2}\mathop{\texttt{/}}\texttt{reg3}$   \\ \hline
+cmpf reg1, reg2, reg3            & {\parbox{11cm}{Сравнить содержимое вещественных регистров reg2 и reg3, а результат записать в целочисленный регистр reg1. А именно:%
+$$
+\texttt{reg1}\leftarrow\begin{cases}
+-1,\text{ если $\texttt{reg2}<\texttt{reg3}$};\cr
+0,\text{ если $\texttt{reg2}=\texttt{reg3}$};\cr
++1,\text{ если $\texttt{reg2}>\texttt{reg3}$};\cr
++2,\text{ если содержимое reg2 и reg3 --- несравнимо}.\cr
+\end{cases}
+$$}} \\ \hline
+roundn reg1, reg2                & Записать в целочисленный регистр reg1 результат округления содержимого вещественного регистра reg2 к ближайшему целому.    \\ \hline
+roundl reg1, reg2                & Записать в целочисленный регистр reg1 результат округления содержимого вещественного регистра reg2 к ближайшему меньшему целому.    \\ \hline
+roundg reg1, reg2                & Записать в целочисленный регистр reg1 результат округления содержимого вещественного регистра reg2 к ближайшему большему целому.    \\ \hline
+roundt reg1, reg2                & Записать в целочисленный регистр reg1 результат округления содержимого вещественного регистра reg2 отбрасыванием дробной части.    \\ \hline
+frac reg1, reg2                  & Записать в вещественный регистр reg1 дробную часть содержимого вещественного регистра reg2.    \\ \hline
+absf reg1, reg2                  & Записать в вещественный регистр reg1 результат вычисления модуля числа, находящегося в вещественном регистре reg2. \\ \hline
+mul2f reg1, reg2, reg3           & $\texttt{reg1}\leftarrow \texttt{reg2}\cdot2^{\texttt{reg3}}$. Здесь reg1 и reg2 --- вещественные регистры, а reg3 --- целочисленный регистр. \\ \hline 
+mul2f reg1, reg2, imm15           & $\texttt{reg1}\leftarrow \texttt{reg2}\cdot2^{\texttt{reg3}}$. Здесь reg1 и reg2 --- вещественные регистры, а imm15 --- знаковая целочисленная 15--разрядная константа. \\ \hline 
+\end{longtable}    
+
+    \section{Команды передачи управления}
+К командам передачи управления относятся команды условного и безусловного вызова подпрограммы, условного и безусловного перехода, условного и безусловного возврата, команда возбуждения программного прерывания, команда возврата из прерывания. В командах условного и безусловного перехода, а также в командах условного и безусловного вызова подпрограммы адрес перехода может быть как абсолютным, так и смещением относительно регистра указателя команд ip.
+
+В следующей таблице приведены все команды передачи управления. 
+\begin{longtable}[c]{|l|p{12.5cm}|}
+\caption{Команды передачи управления} \\ \hline
+{\textbf{Команда}}           & \textbf{Пояснение} \endhead \hline 
+jmp reg                      & Безусловный переход по абсолютному адресу, указанному в регистре: ip $\leftarrow$ reg, где reg --- целочисленный регистр \\ \hline
+jmpr reg                     & Безусловный относительный переход: ip += 4 * reg, где reg --- целочисленный регистр\\ \hline
+jmpr imm20                   & Безусловный относительный переход: ip += 4 * imm20, где imm20 --- 20--разрядная знаковая константа. \\ \hline
+jmp\textit{cc} reg1, reg2    & Условный переход по абсолютному адресу, указанному в регистре: если содержимое целочисленного регистра reg1 удовлетворяет условию \textit{cc}, то ip $\leftarrow$ reg2, где reg2 --- целочисленный регистр \\ \hline
+jmp\textit{cc}r reg1, reg2   & Условный относительный переход: если содержимое целочисленного регистра reg1 удовлетворяет условию \textit{cc}, то ip += 4 * reg2, где reg2 --- целочисленный регистр\\ \hline
+jmp\textit{cc}r reg, imm15   & Условный относительный переход: если содержимое целочисленного регистра reg удовлетворяет условию \textit{cc}, то ip += 4 * imm20, где imm15 --- 15--разрядная знаковая константа. \\ \hline
+call reg                     & {\parbox{12.4cm}{Безусловный вызов подпрограммы, абсолютный адрес которой находится в целочисленном регистре reg. А именно, делается следующее:\\ %
+\texttt{%
+\phantom{aaaa}sp -= 16;\\
+\phantom{aaaa}*sp = ip;\\
+\phantom{aaaa}ip $\leftarrow$ reg;
+}
+}} \\ \hline
+callr reg                     & {\parbox{12.4cm}{Безусловный вызов подпрограммы, относительный адрес которой находится в целочисленном регистре reg. А именно, делается следующее:\\ %
+\texttt{%
+\phantom{aaaa}sp -= 16;\\
+\phantom{aaaa}*sp = ip;\\
+\phantom{aaaa}ip += 4 * reg;
+}
+}} \\ \hline
+callr imm20                   & {\parbox{12.4cm}{Безусловный вызов подпрограммы, относительный адрес которой задан знаковой константой imm20. А именно, делается следующее:\\ %
+\texttt{%
+\phantom{aaaa}sp -= 16;\\
+\phantom{aaaa}*sp = ip;\\
+\phantom{aaaa}ip += 4 * imm20;
+}
+}} \\ \hline
+call\textit{cc} reg1, reg2    & {\parbox{12.4cm}{Условный вызов подпрограммы: если содержимое целочисленного регистра reg1 удовлетворяет условию \textit{cc}, то перейти к выполнению подпрограммы, абсолютный адрес которой указан в целочисленном регистре reg2. А именно, делается следующее:\\ %
+\texttt{%
+if(cc)\{\\
+\phantom{aaaa}sp -= 16;\\
+\phantom{aaaa}*sp = ip;\\
+\phantom{aaaa}ip $\leftarrow$ reg2;\\
+\}
+}
+}} \\ \hline
+call\textit{cc}r reg1, reg2   & {\parbox{12.4cm}{Условный вызов подпрограммы: если содержимое целочисленного регистра reg1 удовлетворяет условию \textit{cc}, то перейти к выполнению подпрограммы, относительный адрес которой указан в целочисленном регистре reg2. А именно, делается следующее:\\ %
+\texttt{%
+if(cc)\{\\
+\phantom{aaaa}sp -= 16;\\
+\phantom{aaaa}*sp = ip;\\
+\phantom{aaaa}ip $\leftarrow$ 4 * reg2;\\
+\}
+}
+}} \\ \hline
+call\textit{cc}r reg, imm15   & {\parbox{12.4cm}{Условный вызов подпрограммы: если содержимое целочисленного регистра reg удовлетворяет условию \textit{cc}, то перейти к выполнению подпрограммы, относительный адрес которой указан непосредственно заданной 15--разрядной знаковой константой imm15. А именно, делается следующее:\\ %
+\texttt{%
+if(cc)\{\\
+\phantom{aaaa}sp -= 16;\\
+\phantom{aaaa}*sp = ip;\\
+\phantom{aaaa}ip $\leftarrow$ 4 * imm15;\\
+\}
+}
+}} \\ \hline
+ret                           & {\parbox{12.4cm}{Безусловный возврат из подпрограммы. А именно, делается следующее:\\ %
+\texttt{%
+\phantom{aaaa}ip $\leftarrow$ *sp;\\
+\phantom{aaaa}sp += 16;
+}
+}} \\ \hline
+ret\textit{cc} reg            & {\parbox{12.4cm}{Условный возврат из подпрограммы, т.е. возврат из подпрограммы, если содержимое целочисленного регистра reg удовлетворяет условию \textit{cc}. А именно, делается следующее:\\ %
+\texttt{%
+if(cc)\{\\
+\phantom{aaaa}ip $\leftarrow$ *sp;\\
+\phantom{aaaa}sp += 16;\\
+\}
+}
+}} \\ \hline
+reta reg                     & {\parbox{12.4cm}{Безусловный возврат из подпрограммы с очисткой стека от переданных аргументов. В целочисленном регистре reg содержится размер переданных аргументов в байтах. А именно, делается следующее:\\ %
+\texttt{%
+\phantom{aaaa}ip $\leftarrow$ *sp;\\
+\phantom{aaaa}sp += 16;\\
+\phantom{aaaa}sp += reg;
+}
+}} \\ \hline
+reta imm20                   & {\parbox{12.4cm}{Безусловный возврат из подпрограммы с очисткой стека от переданных аргументов. Непосредственно заданная беззнаковая константа imm20 равна размеру переданных аргументов в байтах. А именно, делается следующее:\\ %
+\texttt{%
+\phantom{aaaa}ip $\leftarrow$ *sp;\\
+\phantom{aaaa}sp += 16;\\
+\phantom{aaaa}sp += imm20;
+}
+}} \\ \hline
+reta\textit{cc} reg1, reg2   & {\parbox{12.4cm}{Условный возврат из подпрограммы с очисткой стека от переданных аргументов, если содержимое целочисленного регистра reg1 удовлетворяет условию \textit{cc}. В целочисленном регистре reg2 содержится размер переданных аргументов в байтах. А именно, делается следующее:\\ %
+\texttt{%
+if(cc)\{\\
+\phantom{aaaa}ip $\leftarrow$ *sp;\\
+\phantom{aaaa}sp += 16;\\
+\phantom{aaaa}sp += reg2;\\
+\}
+}
+}} \\ \hline
+reta\textit{cc} reg, imm15   & {\parbox{12.4cm}{Условный возврат из подпрограммы с очисткой стека от переданных аргументов, если содержимое целочисленного регистра reg удовлетворяет условию \textit{cc}. Беззнаковая целочисленная константа imm15 определяет размер переданных аргументов в байтах. А именно, делается следующее:\\ %
+\texttt{%
+if(cc)\{\\
+\phantom{aaaa}ip $\leftarrow$ *sp;\\
+\phantom{aaaa}sp += 16;\\
+\phantom{aaaa}sp += imm15;\\
+\}
+}
+}} \\ \hline
+trap reg                     & {\parbox{12.4cm}{Вызов подпрограммы обработки прерывания, номер которого задан в целочисленном регистре reg. А именно, делается следующее:\\ %
+\texttt{%
+\phantom{aaaa}push r0-r31;\\
+\phantom{aaaa}push ip;\\
+\phantom{aaaa}ip $\leftarrow$ (reg \& 0x3FF) * 16;
+}
+}} \\ \hline
+trap imm10                   & {\parbox{12.4cm}{Вызов подпрограммы обработки прерывания, номер которого задан беззнаковой целочисленной константой imm10. А именно, делается следующее:\\ %
+\texttt{%
+\phantom{aaaa}push r0-r31;\\
+\phantom{aaaa}push ip;\\
+\phantom{aaaa}ip $\leftarrow$ imm10 * 16;
+}
+}} \\ \hline
+reti                         & {\parbox{12.4cm}{Возврат из подпрограммы обработки прерывания. А именно, делается следующее:\\ %
+\texttt{%
+\phantom{aaaa}pop ip;\\
+\phantom{aaaa}pop r0-r31;
+}
+}} \\ \hline
+\end{longtable}    
+
+
+Здесь \textit{cc} --- условие, которому должно удовлетворять содержимое регистра, чтобы произошла передача управления. В приводимой ниже таблице приведены все такие условия.
+
+\begin{longtable}[c]{|l|l|}
+\caption{Обозначения условий для условной передачи управления} \\ \hline
+{\textbf{Обозначение}} & \textbf{Пояснение} \endhead \hline 
+s                      & Содержимое проверяемого регистра --- отрицательно. \\ \hline
+z                      & Содержимое проверяемого регистра --- ноль. \\ \hline
+p                      & Содержимое проверяемого регистра --- положительно. \\ \hline
+nz                     & Содержимое проверяемого регистра --- не ноль. \\ \hline
+ge                     & Содержимое проверяемого регистра --- больше или равно нуля. \\ \hline
+le                     & Содержимое проверяемого регистра --- меньше или равно нуля. \\ \hline
+\end{longtable}
+ 
+\chapter{Кодировка команд}
+В настоящей главе описываются форматы команд и кодировка команд.
+\section{Формат команд}
+Все команды используют один из общих шаблонов форматов, показанных ниже (самые старшие разряды --- слева).
+
+%\bytefieldsetup{bitwidth=4.6mm}
+%\bytefieldsetup{bitheight=5mm} 
+\setlength{\bitwidth}{4.6mm}
+\setlength{\byteheight}{5mm}
+\begin{figure}[!h]
+\centering
+{\begin{bytefield}{32}
+\bitheader[b]{0,19, 20, 29, 30, 31}\\
+\bitbox{2}{T} & \bitbox{10}{OP} & \bitbox{20}{IMM}
+\end{bytefield}}
+\caption{Шаблон A. Имеется один операнд, являющийся непосредственно заданной константой.}\label{table:templateA}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+{\begin{bytefield}{32}
+\bitheader[b]{0,14,15,19, 20, 29, 30, 31}\\
+\bitbox{2}{T} & \bitbox{10}{OP} & \bitbox{5}{R} & \bitbox{15}{0}
+\end{bytefield}}
+\caption{Шаблон B. Имеется один регистровый операнд.}\label{table:templateB}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+{\begin{bytefield}{32}
+\bitheader[b]{0,14,15,19, 20, 29, 30, 31}\\
+\bitbox{2}{T} & \bitbox{10}{OP} & \bitbox{5}{R} & \bitbox{15}{IMM}
+\end{bytefield}}
+\caption{Шаблон C. Имеется один регистровый операнд и один операнд, являющийся непосредственно заданной константой.}\label{table:templateC}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+{\begin{bytefield}{32}
+\bitheader[b]{0,9,10,14,15,19,20, 29,30,31}\\
+\bitbox{2}{T} & \bitbox{10}{OP} & \bitbox{5}{R1} & \bitbox{5}{R2} & \bitbox{10}{0}
+\end{bytefield}}
+\caption{Шаблон D. Имеется два регистровых операнда.}\label{table:templateD}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+{\begin{bytefield}{32}
+\bitheader[b]{0,9,10,14,15,19,20, 29,30,31}\\
+\bitbox{2}{T} & \bitbox{10}{OP} & \bitbox{5}{R1} & \bitbox{5}{R2} & \bitbox{10}{IMM}
+\end{bytefield}}
+\caption{Шаблон E. Имеется два регистровых операнда и один операнд, являющийся непосредственно заданной константой.}\label{table:templateE}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+{\begin{bytefield}{32}
+\bitheader[b]{0,4,5,9,10,14,15,19,20, 29,30,31}\\
+\bitbox{2}{T} & \bitbox{10}{OP} & \bitbox{5}{R1} & \bitbox{5}{R2} & \bitbox{5}{R3} & \bitbox{5}{0}
+\end{bytefield}}
+\caption{Шаблон F. Имеется три регистровых операнда.}\label{table:templateF}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+{\begin{bytefield}{32}
+\bitheader[b]{0,4,5,9,10,14,15,19,20, 29,30,31}\\
+\bitbox{2}{T} & \bitbox{10}{OP} & \bitbox{5}{R1} & \bitbox{5}{R2} & \bitbox{5}{R3} & \bitbox{5}{R4}
+\end{bytefield}}
+\caption{Шаблон G. Имеется четыре регистровых операнда.}\label{table:templateG}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+{\begin{bytefield}{32}
+\bitheader[b]{0,1,2,4,5,9,10,14,15,19,20, 29,30,31}\\
+\bitbox{2}{T} & \bitbox{10}{OP} & \bitbox{5}{R} & \bitbox{5}{B} & \bitbox{5}{IX} & \bitbox{3}{SF} & \bitbox{2}{0}
+\end{bytefield}}
+\caption{Шаблон M. Команда загрузки или сохранения.}\label{table:templateM}
+\end{figure}
+
+\newpage
+
+\begin{figure}[!h]
+\centering
+{\begin{bytefield}{32}
+\bitheader[b]{0,19, 20, 29, 30, 31}\\
+\bitbox{2}{T} & \bitbox{10}{OP} & \bitbox{20}{0}
+\end{bytefield}}
+\caption{Шаблон H. У команды нет аргументов.}\label{table:templateH}
+\end{figure}
+
+В следующих таблица приведены коды регистров, коды условий, и коды в поле SF.
+
+\begin{longtable}[c]{|l|l|}
+\caption{Коды целочисленных регистров}\label{integer.register.codes} \\ \hline
+{\textbf{Регистр}} & \textbf{Код} \endhead \hline 
+r0                 & 00000 \\ \hline
+r1                 & 00001 \\ \hline
+r2                 & 00010 \\ \hline
+r3                 & 00011 \\ \hline
+r4                 & 00100 \\ \hline
+r5                 & 00101 \\ \hline
+r6                 & 00110 \\ \hline
+r7                 & 00111 \\ \hline
+r8                 & 01000 \\ \hline
+r9                 & 01001 \\ \hline
+r10                & 01010 \\ \hline
+r11                & 01011 \\ \hline
+r12                & 01100 \\ \hline
+r13                & 01101 \\ \hline
+r14                & 01110 \\ \hline
+r15                & 01111 \\ \hline
+r16                & 10000 \\ \hline
+r17                & 10001 \\ \hline
+r18                & 10010 \\ \hline
+r19                & 10011 \\ \hline
+r20                & 10100 \\ \hline
+r21                & 10101 \\ \hline
+r22                & 10110 \\ \hline
+r23                & 10111 \\ \hline
+r24                & 11000 \\ \hline
+r25                & 11001 \\ \hline
+r26                & 11010 \\ \hline
+r27                & 11011 \\ \hline
+r28                & 11100 \\ \hline
+r29                & 11101 \\ \hline
+r30                & 11110 \\ \hline
+r31                & 11111 \\ \hline
+\end{longtable}
+
+\begin{longtable}[c]{|l|l|}
+\caption{Коды вещественных регистров} \\ \hline
+{\textbf{Регистр}} & \textbf{Код} \endhead \hline 
+f0                 & 00000 \\ \hline
+f1                 & 00001 \\ \hline
+f2                 & 00010 \\ \hline
+f3                 & 00011 \\ \hline
+f4                 & 00100 \\ \hline
+f5                 & 00101 \\ \hline
+f6                 & 00110 \\ \hline
+f7                 & 00111 \\ \hline
+f8                 & 01000 \\ \hline
+f9                 & 01001 \\ \hline
+f10                & 01010 \\ \hline
+f11                & 01011 \\ \hline
+f12                & 01100 \\ \hline
+f13                & 01101 \\ \hline
+f14                & 01110 \\ \hline
+f15                & 01111 \\ \hline
+f16                & 10000 \\ \hline
+f17                & 10001 \\ \hline
+f18                & 10010 \\ \hline
+f19                & 10011 \\ \hline
+f20                & 10100 \\ \hline
+f21                & 10101 \\ \hline
+f22                & 10110 \\ \hline
+f23                & 10111 \\ \hline
+f24                & 11000 \\ \hline
+f25                & 11001 \\ \hline
+f26                & 11010 \\ \hline
+f27                & 11011 \\ \hline
+f28                & 11100 \\ \hline
+f29                & 11101 \\ \hline
+f30                & 11110 \\ \hline
+f31                & 11111 \\ \hline
+\end{longtable}
+
+\begin{longtable}[c]{|l|l|}
+\caption{Коды условий}\label{conditions.codes} \\ \hline
+{\textbf{Условие}} & \textbf{Код} \endhead \hline 
+s                  & 000 \\ \hline
+z                  & 001 \\ \hline
+p                  & 010 \\ \hline
+nz                 & 011 \\ \hline
+ge                 & 100 \\ \hline
+le                 & 101 \\ \hline
+\end{longtable}
+
+\begin{longtable}[c]{|l|l|}
+\caption{Коды в поле SF}\label{sizes.codes} \\ \hline
+{\textbf{Масштабирующий множитель}} & \textbf{Код} \endhead \hline 
+1                                   & 000 \\ \hline
+2                                   & 001 \\ \hline
+4                                   & 010 \\ \hline
+8                                   & 011 \\ \hline
+16                                  & 100 \\ \hline
+10                                  & 101 \\ \hline
+\end{longtable}
+
+Коды 110 и 111 в поле SF --- зарезервированы.
+
+Поле T отвечает за тип команды, поле OP --- за код операции. Возможны следующие значения поля T:
+
+\begin{longtable}[c]{|l|l|}
+\caption{Коды в поле T}\label{types.codes} \\ \hline
+{\textbf{Код}} & \textbf{Пояснения} \endhead \hline 
+00             & целочисленная команда, но не команда пересылки \\ \hline
+01             & вещественная команда, но не команда пересылки \\ \hline
+10             & команда передачи управления \\ \hline
+11             & команда пересылки\\ \hline
+\end{longtable}
+
+В последующих разделах подробно описана кодирование каждой команды.
+
+\section{Целочисленные команды}
+    \subsection{Команды пересылки}
+В следующей таблице описано кодирование целочисленных команд пересылки. Двоеточием разделяются поля машинной команды. В двоичном коде команды под reg, reg1, reg2, reg3, reg4, r$i$, r$j$ понимаются коды соответствующих регистровых аргументов команды, взятые из таблицы~\ref{integer.register.codes}. Под imm10, imm15, imm20 здесь и всюду далее в двоичном коде понимается двоичное представление соответствующей константы, являющейся аргументом команды.
+\begin{longtable}[c]{|l|p{12.5cm}|}
+\caption{Кодирование целочисленных команд пересылки} \\ \hline
+{\textbf{Команда}}   & \textbf{Двоичный код} \endhead \hline 
+mov reg1, reg2       & 11:0000000000:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=11$, $\texttt{OP}=0000000000$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+movu reg, imm15      & 11:0000000001:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=11$, $\texttt{OP}=0000000001$, $\texttt{R}=\texttt{reg}$)\\ \hline
+movs reg, imm15      & 11:0000000010:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=11$, $\texttt{OP}=0000000010$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov reg, [mem128]    & 11:0000000011:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000000011$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov8u reg, [mem8]    & 11:0000000100:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000000100$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov16u reg, [mem16]  & 11:0000000101:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000000101$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov32u reg, [mem32]  & 11:0000000110:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000000110$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov64u reg, [mem64]  & 11:0000000111:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000000111$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov8s reg, [mem8]    & 11:0000001000:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000001000$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov16u reg, [mem16]  & 11:0000001001:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000001001$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov32u reg, [mem32]  & 11:0000001010:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000001010$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov64u reg, [mem64]  & 11:0000001011:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000001011$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov [mem128], reg    & 11:0000001100:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000001100$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov8 [mem8], reg     & 11:0000001101:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000001101$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov16 [mem16], reg   & 11:0000001110:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000001110$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov32 [mem32], reg   & 11:0000001111:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000001111$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov64 [mem64], reg   & 11:0000010000:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000010000$, $\texttt{R}=\texttt{reg}$)\\ \hline
+push r$i$-r$j$       & 11:0000010001:r$i$:r$j$:0000000000 (т.е. используется шаблон D с $\texttt{T}=11$, $\texttt{OP}=0000010001$, $\texttt{R1}=\texttt{r}i$, $\texttt{R2}=\texttt{r}j$) \\ \hline
+pop r$i$-r$j$        & 11:0000010010:r$i$:r$j$:0000000000 (т.е. используется шаблон D с $\texttt{T}=11$, $\texttt{OP}=0000010010$, $\texttt{R1}=\texttt{r}i$, $\texttt{R2}=\texttt{r}j$) \\ \hline
+\end{longtable}
+    
+    \subsection{Арифметические команды}
+Ниже приведено описание кодирования целочисленных арифметических команд.
+\begin{longtable}[c]{|l|p{12.5cm}|}
+\caption{Кодирование целочисленных арифметических команд} \\ \hline
+{\textbf{Команда}}              & \textbf{Двоичный код} \endhead \hline 
+addi reg1, reg2, reg3           & 00:0000000000:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000000000$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+addi reg1, reg2, imm10          & 00:0000000001:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000000001$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+subi reg1, reg2, reg3           & 00:0000000010:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000000010$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+subi reg1, reg2, imm10          & 00:0000000011:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000000011$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+muliu reg1, reg2, reg3          & 00:0000000100:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000000100$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+muliu reg1, reg2, imm10         & 00:0000000101:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000000101$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+mulis reg1, reg2, reg3          & 00:0000000110:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000000110$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+mulis reg1, reg2, imm10         & 00:0000000111:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000000111$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+diviu reg1, reg2, reg3          & 00:0000001000:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000001000$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+diviu reg1, reg2, imm10         & 00:0000001001:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000001001$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+divis reg1, reg2, reg3          & 00:0000001010:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000001010$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+divis reg1, reg2, imm10         & 00:0000001011:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000001011$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+modiu reg1, reg2, reg3          & 00:0000001100:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000001100$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+modiu reg1, reg2, imm10         & 00:0000001101:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000001101$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+modis reg1, reg2, reg3          & 00:0000001110:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000001110$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+modis reg1, reg2, imm10         & 00:0000001111:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000001111$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+divmodiu reg1, reg2, reg3, reg4 & 00:0000010000:reg1:reg2:reg3:reg4 (т.е. используется шаблон G с $\texttt{T}=00$, $\texttt{OP}=0000010000$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$, $\texttt{R4}=\texttt{reg4}$) \\ \hline
+divmodis reg1, reg2, reg3, reg4  & 00:0000010001:reg1:reg2:reg3:reg4 (т.е. используется шаблон G с $\texttt{T}=00$, $\texttt{OP}=0000010001$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$, $\texttt{R4}=\texttt{reg4}$) \\ \hline
+cmpiu reg1, reg2, reg3           & 00:0000010010:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000010010$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+cmpiu reg1, reg2, imm10          & 00:0000010011:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000010011$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+cmpis reg1, reg2, reg3           & 00:0000010100:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000010100$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+cmpis reg1, reg2, imm10          & 00:0000010101:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000010101$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+\end{longtable} 
+    
+    \subsection{Поразрядные операции}
+В следующей таблице описано кодирование целочисленных поразрядных операций.    
+\begin{longtable}[c]{|l|p{12.5cm}|}
+\caption{Кодирование целочисленных команд поразрядных операций} \\ \hline
+{\textbf{Команда}}              & \textbf{Двоичный код} \endhead \hline 
+and reg1, reg2, reg3            & 00:0000010110:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000010110$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+and reg1, reg2, imm10           & 00:0000010111:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000010111$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+or reg1, reg2, reg3             & 00:0000011000:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000011000$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+or reg1, reg2, imm10            & 00:0000011001:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000011001$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+xor reg1, reg2, reg3            & 00:0000011010:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000011010$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+xor reg1, reg2, imm10           & 00:0000011011:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000011011$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+andn reg1, reg2, reg3           & 00:0000011100:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000011100$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+andn reg1, reg2, imm10          & 00:0000011101:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000011101$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+orn reg1, reg2, reg3            & 00:0000011110:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000011110$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+orn reg1, reg2, imm10           & 00:0000011111:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000011111$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+xorn reg1, reg2, reg3           & 00:0000100000:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000100000$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+xorn reg1, reg2, imm10          & 00:0000100001:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000100001$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+lshift reg1, reg2, reg3         & 00:0000100010:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000100010$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+lshift reg1, reg2, imm10        & 00:0000100011:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000100011$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+rshift reg1, reg2, reg3         & 00:0000100100:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000100100$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+rshift reg1, reg2, imm10        & 00:0000100101:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000100101$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+rshifts reg1, reg2, reg3        & 00:0000100110:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=00$, $\texttt{OP}=0000100110$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+rshifts reg1, reg2, imm10       & 00:0000100111:reg1:reg2:imm10 (т.е. используется шаблон E с $\texttt{T}=00$, $\texttt{OP}=0000100111$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+not reg1, reg2                  & 00:0000101000:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=00$, $\texttt{OP}=0000101000$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+not reg, imm15                  & 00:0000101001:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000101001$, $\texttt{R}=\texttt{reg}$)\\ \hline
+\end{longtable}      
+    
+\section{Вещественные команды}
+    \subsection{Команды пересылки}
+В приводимой ниже таблице описано кодирование вещественных команд пересылки.    
+
+\begin{longtable}[c]{|l|p{12.5cm}|}
+\caption{Кодирование вещественных команд пересылки} \\ \hline
+{\textbf{Команда}}   & \textbf{Двоичный код} \endhead \hline 
+mov reg1, reg2       & 11:0000010011:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=11$, $\texttt{OP}=0000010011$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+mov reg, [mem128]    & 11:0000010100:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000010100$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov32f reg, [mem32]  & 11:0000010101:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000010101$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov64f reg, [mem64]  & 11:0000010110:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000010110$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov80f reg, [mem80]  & 11:0000010111:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000010111$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov32f [mem32], reg  & 11:0000011000:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000011000$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov64f [mem64], reg  & 11:0000011001:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000011001$, $\texttt{R}=\texttt{reg}$)\\ \hline
+mov80f [mem64], reg  & 11:0000011010:reg:B:IX:SF:00 (т.е. используется шаблон M с $\texttt{T}=11$, $\texttt{OP}=0000011010$, $\texttt{R}=\texttt{reg}$)\\ \hline
+push f$i$-f$j$       & 11:0000011011:f$i$:f$j$:0000000000 (т.е. используется шаблон D с $\texttt{T}=11$, $\texttt{OP}=0000011011$, $\texttt{R1}=\texttt{f}i$, $\texttt{R2}=\texttt{f}j$) \\ \hline
+pop f$i$-f$j$        & 11:0000011100:r$i$:r$j$:0000000000 (т.е. используется шаблон D с $\texttt{T}=11$, $\texttt{OP}=0000011100$, $\texttt{R1}=\texttt{f}i$, $\texttt{R2}=\texttt{f}j$) \\ \hline
+\end{longtable}
+        
+    \subsection{Арифметические команды}
+Описание кодирования вещественных арифметических команд приведено в следующей таблице.
+\begin{longtable}[c]{|l|p{12.5cm}|}
+\caption{Кодирование вещественных арифметических команд} \\ \hline
+{\textbf{Команда}}              & \textbf{Двоичный код} \endhead \hline 
+addf reg1, reg2, reg3           & 01:0000000000:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=01$, $\texttt{OP}=0000000000$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+subf reg1, reg2, reg3           & 01:0000000001:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=01$, $\texttt{OP}=0000000001$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+mulf reg1, reg2, reg3           & 01:0000000010:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=01$, $\texttt{OP}=0000000010$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+divf reg1, reg2, reg3           & 01:0000000011:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=01$, $\texttt{OP}=0000000011$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+cmpf reg1, reg2, reg3           & 01:0000000100:reg1:reg2:reg3:00000 (т.е. используется шаблон F с $\texttt{T}=01$, $\texttt{OP}=0000000100$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$,  $\texttt{R3}=\texttt{reg3}$) \\ \hline
+roundn reg1, reg2               & 01:0000000101:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=01$, $\texttt{OP}=0000000101$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+roundl reg1, reg2               & 01:0000000110:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=01$, $\texttt{OP}=0000000110$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+roundg reg1, reg2               & 01:0000000111:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=01$, $\texttt{OP}=0000000111$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+roundt reg1, reg2               & 01:0000001000:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=01$, $\texttt{OP}=0000001000$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+frac reg1, reg2                 & 01:0000001001:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=01$, $\texttt{OP}=0000001001$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+\end{longtable} 
+
+
+\section{Команды передачи управления}
+Кодированию команд передачи управления посвящена следующая таблица.
+\begin{longtable}[c]{|l|p{12.5cm}|}
+\caption{Кодирование команд передачи управления} \\ \hline
+{\textbf{Команда}}              & \textbf{Двоичный код} \endhead \hline 
+jmp reg                         & 10:0000000000:reg:000000000000000 (т.е. используется шаблон B с $\texttt{T}=10$, $\texttt{OP}=0000000000$, $\texttt{R}=\texttt{reg}$) \\ \hline
+jmps reg1, reg2                 & 10:0000000001:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000000001$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+jmpz reg1, reg2                 & 10:0000000010:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000000010$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+jmpp reg1, reg2                 & 10:0000000011:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000000011$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+jmpnz reg1, reg2                & 10:0000000100:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000000100$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+jmpge reg1, reg2                & 10:0000000101:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000000101$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+jmple reg1, reg2                & 10:0000000110:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000000110$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+jmpr reg1                       & 10:0000000111:reg:000000000000000 (т.е. используется шаблон B с $\texttt{T}=10$, $\texttt{OP}=0000000111$, $\texttt{R}=\texttt{reg}$) \\ \hline
+jmpsr reg1, reg2                & 10:0000001000:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000001000$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+jmpzr reg1, reg2                & 10:0000001001:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000001001$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+jmppr reg1, reg2                & 10:0000001010:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000001010$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+jmpnzr reg1, reg2               & 10:0000001011:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000001011$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+jmpger reg1, reg2               & 10:0000001100:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000001100$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+jmpler reg1, reg2               & 10:0000001101:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000001101$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+jmpr imm20                      & 10:0000001110:imm20 (т.е. используется шаблон A с $\texttt{T}=10$, $\texttt{OP}=0000001110$) \\ \hline
+jmpsr reg, imm15                & 10:0000001111:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000001111$, $\texttt{R}=\texttt{reg}$)\\ \hline
+jmpzr reg, imm15                & 10:0000010000:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000010000$, $\texttt{R}=\texttt{reg}$)\\ \hline
+jmppr reg, imm15                & 10:0000010001:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000010001$, $\texttt{R}=\texttt{reg}$)\\ \hline
+jmpnzr reg, imm15               & 10:0000010010:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000010010$, $\texttt{R}=\texttt{reg}$)\\ \hline
+jmpger reg, imm15               & 10:0000010011:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000010011$, $\texttt{R}=\texttt{reg}$)\\ \hline
+jmpler reg, imm15               & 10:0000010100:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000010100$, $\texttt{R}=\texttt{reg}$)\\ \hline
+call reg                        & 10:0000010101:reg:000000000000000 (т.е. используется шаблон B с $\texttt{T}=10$,  $\texttt{OP}=0000010101$, $\texttt{R}=\texttt{reg}$) \\ \hline
+calls reg1, reg2                & 10:0000010110:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000010110$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+callz reg1, reg2                & 10:0000010111:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000010111$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+callp reg1, reg2                & 10:0000011000:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000011000$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+callnz reg1, reg2               & 10:0000011001:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000011001$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+callge reg1, reg2               & 10:0000011010:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000011010$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+callle reg1, reg2               & 10:0000011011:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000011011$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+callr reg1                      & 10:0000011100:reg:000000000000000 (т.е. используется шаблон B с $\texttt{T}=10$,  $\texttt{OP}=0000011100$, $\texttt{R}=\texttt{reg}$) \\ \hline
+callsr reg1, reg2               & 10:0000011101:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000011101$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+callzr reg1, reg2               & 10:0000011110:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000011110$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+callpr reg1, reg2               & 10:0000011111:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000011111$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+callnzr reg1, reg2              & 10:0000100000:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000100000$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+callger reg1, reg2              & 10:0000100001:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000100001$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+calller reg1, reg2              & 10:0000100010:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000100010$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+callr imm20                     & 10:0000100011:imm20 (т.е. используется шаблон A с $\texttt{T}=10$, $\texttt{OP}=0000100011$) \\ \hline
+callsr reg, imm15               & 10:0000100100:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000100100$, $\texttt{R}=\texttt{reg}$)\\ \hline
+callzr reg, imm15               & 10:0000100101:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000100101$, $\texttt{R}=\texttt{reg}$)\\ \hline
+callpr reg, imm15               & 10:0000100110:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000100110$, $\texttt{R}=\texttt{reg}$)\\ \hline
+callnzr reg, imm15              & 10:0000100111:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000100111$, $\texttt{R}=\texttt{reg}$)\\ \hline
+callger reg, imm15              & 10:0000101000:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000101000$, $\texttt{R}=\texttt{reg}$)\\ \hline
+calller reg, imm15              & 10:0000101001:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000101001$, $\texttt{R}=\texttt{reg}$)\\ \hline
+ret                             & 10:0000101010:00000000000000000000 (т.е. используется шаблон H с $\texttt{T}=10$, $\texttt{OP}=0000101010$) \\ \hline
+rets reg                        & 10:0000101011:reg:000000000000000 (т.е. используется шаблон B с $\texttt{T}=10$, $\texttt{OP}=0000101011$, $\texttt{R}=\texttt{reg}$) \\ \hline
+retz reg                        & 10:0000101100:reg:000000000000000 (т.е. используется шаблон B с $\texttt{T}=10$, $\texttt{OP}=0000101100$, $\texttt{R}=\texttt{reg}$) \\ \hline
+retp reg                        & 10:0000101101:reg:000000000000000 (т.е. используется шаблон B с $\texttt{T}=10$, $\texttt{OP}=0000101101$, $\texttt{R}=\texttt{reg}$) \\ \hline
+retnz reg                       & 10:0000101110:reg:000000000000000 (т.е. используется шаблон B с $\texttt{T}=10$, $\texttt{OP}=0000101110$, $\texttt{R}=\texttt{reg}$) \\ \hline
+retge reg                       & 10:0000101111:reg:000000000000000 (т.е. используется шаблон B с $\texttt{T}=10$, $\texttt{OP}=0000101111$, $\texttt{R}=\texttt{reg}$) \\ \hline
+retle reg                       & 10:0000110000:reg:000000000000000 (т.е. используется шаблон B с $\texttt{T}=10$, $\texttt{OP}=0000110000$, $\texttt{R}=\texttt{reg}$) \\ \hline
+reta reg                        & 10:0000110001:reg:000000000000000 (т.е. используется шаблон B с $\texttt{T}=10$, $\texttt{OP}=0000110001$, $\texttt{R}=\texttt{reg}$) \\ \hline
+retasr reg1, reg2               & 10:0000110010:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000110010$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+retazr reg1, reg2               & 10:0000110011:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000110011$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+retapr reg1, reg2               & 10:0000110100:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000110100$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+retanzr reg1, reg2              & 10:0000110101:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000110101$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+retager reg1, reg2              & 10:0000110110:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000110110$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+retaler reg1, reg2              & 10:0000110111:reg1:reg2:0000000000 (т.е. используется шаблон D с $\texttt{T}=10$, $\texttt{OP}=0000110111$, $\texttt{R1}=\texttt{reg1}$, $\texttt{R2}=\texttt{reg2}$) \\ \hline
+reta imm20                      & 10:0000111000:imm20 (т.е. используется шаблон A с $\texttt{T}=10$, $\texttt{OP}=0000111000$) \\ \hline
+retasr reg, imm15               & 10:0000111001:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000111001$, $\texttt{R}=\texttt{reg}$)\\ \hline
+retazr reg, imm15               & 10:0000111010:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000111010$, $\texttt{R}=\texttt{reg}$)\\ \hline
+retapr reg, imm15               & 10:0000111011:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000111011$, $\texttt{R}=\texttt{reg}$)\\ \hline
+retanzr reg, imm15              & 10:0000111100:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000111100$, $\texttt{R}=\texttt{reg}$)\\ \hline
+retager reg, imm15              & 10:0000111101:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000111101$, $\texttt{R}=\texttt{reg}$)\\ \hline
+retaler reg, imm15              & 10:0000111110:reg:imm15  (т.е. используется шаблон C с $\texttt{T}=00$, $\texttt{OP}=0000111110$, $\texttt{R}=\texttt{reg}$)\\ \hline
+trap reg                        & 10:0000111111:reg:000000000000000 (т.е. используется шаблон B с $\texttt{T}=10$, $\texttt{OP}=0000111111$, $\texttt{R}=\texttt{reg}$) \\ \hline
+trap imm10                      & 10:0001000000:0000000000imm10 (т.е. используется шаблон A с $\texttt{T}=10$, $\texttt{OP}=0001000000$) \\ \hline
+reti                            & 10:0001000001:00000000000000000000 (т.е. используется шаблон H с $\texttt{T}=10$, $\texttt{OP}=0001000001$) \\ \hline
+\end{longtable} 
+
+
+
+\end{document}
